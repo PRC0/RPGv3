@@ -688,7 +688,7 @@ Muestra:
 ## 📞 Créditos y Ayuda
 
 **Proyecto**: RPGv3 - Sistema de Combate por Turnos  
-**Versión**: 1.1.0  
+**Versión**: 1.2.0  
 **Java**: 17  
 **Framework**: Swing GUI  
 

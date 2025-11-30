@@ -68,18 +68,29 @@ public class BattlePanel extends JPanel implements GameEventListener {
         refresh();
     }
     
+    private JLabel playerImageLabel;
+    private JLabel enemyImageLabel;
+
     private JPanel createCombatantsPanel() {
         JPanel panel = new JPanel(new GridLayout(1, 2, 30, 0));
         panel.setOpaque(false);
         
         // Info del jugador
         JPanel playerPanel = createStatCard("Jugador", UITheme.ACCENT_GREEN);
+        
+        // Imagen del jugador
+        playerImageLabel = new JLabel();
+        playerImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        updatePlayerImage(); // Cargar imagen
+        
         playerHpLabel = new JLabel("HP: 100/100");
         playerHpLabel.setForeground(UITheme.TEXT_PRIMARY);
         playerHpLabel.setFont(UITheme.FONT_BODY_BOLD);
+        playerHpLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
         playerHpBar = createStyledProgressBar(UITheme.ACCENT_GREEN);
         
+        playerPanel.add(playerImageLabel);
         playerPanel.add(Box.createVerticalStrut(10));
         playerPanel.add(playerHpLabel);
         playerPanel.add(Box.createVerticalStrut(5));
@@ -87,12 +98,19 @@ public class BattlePanel extends JPanel implements GameEventListener {
         
         // Info del enemigo
         JPanel enemyPanel = createStatCard("Enemigo", UITheme.ACCENT_RED);
+        
+        // Imagen del enemigo
+        enemyImageLabel = new JLabel();
+        enemyImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        
         enemyHpLabel = new JLabel("HP: 50/50");
         enemyHpLabel.setForeground(UITheme.TEXT_PRIMARY);
         enemyHpLabel.setFont(UITheme.FONT_BODY_BOLD);
+        enemyHpLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
         enemyHpBar = createStyledProgressBar(UITheme.ACCENT_RED);
         
+        enemyPanel.add(enemyImageLabel);
         enemyPanel.add(Box.createVerticalStrut(10));
         enemyPanel.add(enemyHpLabel);
         enemyPanel.add(Box.createVerticalStrut(5));
@@ -102,6 +120,75 @@ public class BattlePanel extends JPanel implements GameEventListener {
         panel.add(enemyPanel);
         
         return panel;
+    }
+    
+    private void updatePlayerImage() {
+        Character player = GameFacade.getInstance().getPlayer();
+        String imageName = "hero.png"; // Default Warrior
+        
+        if (player != null) {
+            String className = player.getClass().getSimpleName().toLowerCase();
+            if (className.contains("mage")) {
+                imageName = "mage.png";
+            } else if (className.contains("archer")) {
+                imageName = "archer.png";
+            } else if (className.contains("priest")) {
+                imageName = "priest.png";
+            }
+        }
+        
+        ImageIcon icon = loadIcon(imageName);
+        if (icon != null) {
+            playerImageLabel.setIcon(icon);
+        } else {
+            playerImageLabel.setText("[HERO]");
+        }
+    }
+    
+    private void updateEnemyImage(Enemy enemy) {
+        if (enemy == null) {
+            enemyImageLabel.setIcon(null);
+            return;
+        }
+        
+        String imageName = null;
+        String name = enemy.getName().toLowerCase();
+        
+        if (name.contains("goblin")) {
+            imageName = "goblin.png";
+        } else if (name.contains("slime")) {
+            imageName = "slime.png";
+        } else if (name.contains("wolf")) {
+            imageName = "wolf.png";
+        }
+        
+        if (imageName != null) {
+            ImageIcon icon = loadIcon(imageName);
+            if (icon != null) {
+                enemyImageLabel.setIcon(icon);
+                enemyImageLabel.setText(""); // Clear text if image loads
+            } else {
+                enemyImageLabel.setIcon(null);
+                enemyImageLabel.setText("[" + enemy.getName() + "]");
+            }
+        } else {
+            enemyImageLabel.setIcon(null);
+            enemyImageLabel.setText("[" + enemy.getName() + "]");
+        }
+    }
+    
+    private ImageIcon loadIcon(String filename) {
+        try {
+            String path = "assets/images/" + filename;
+            ImageIcon icon = new ImageIcon(path);
+            // Escalar si es necesario (ej. 128x128)
+            Image img = icon.getImage();
+            Image newImg = img.getScaledInstance(128, 128,  java.awt.Image.SCALE_SMOOTH);
+            return new ImageIcon(newImg);
+        } catch (Exception e) {
+            System.err.println("Error cargando imagen: " + filename);
+            return null;
+        }
     }
     
     private JPanel createStatCard(String title, Color accentColor) {
@@ -176,9 +263,11 @@ public class BattlePanel extends JPanel implements GameEventListener {
                 enemyHpLabel.setText(currentEnemy.getName() + " HP: " + currentEnemy.getCurrentHp() + "/" + currentEnemy.getMaxHp());
                 enemyHpBar.setMaximum(currentEnemy.getMaxHp());
                 enemyHpBar.setValue(currentEnemy.getCurrentHp());
+                updateEnemyImage(currentEnemy);
             } else {
                 enemyHpLabel.setText("Sin enemigo");
                 enemyHpBar.setValue(0);
+                enemyImageLabel.setIcon(null);
             }
         } else {
             enemyHpLabel.setText("Sin batalla activa");

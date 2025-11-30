@@ -50,6 +50,12 @@ if %ERRORLEVEL% EQU 0 (
 cd ..
 echo.
 
+REM Copiar assets
+echo [2.5/3] Copiando assets...
+xcopy /E /I /Y assets bin\assets > nul
+echo Assets copiados.
+echo.
+
 REM Ejecutar
 echo [3/3] Lanzando aplicacion...
 echo.

@@ -38,6 +38,12 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 - Generación automática al vencer enemigos
 - Items añadidos realmente al inventario del jugador
 
+#### Arte Visual
+- **Pixel Art Assets** para personajes: Hero, Mage, Archer, Priest
+- **Pixel Art Assets** para enemigos: Slime, Goblin, Orc, Skeleton, Dragon Whelp, Bandit, Wolf, Dark Mage
+- Integración en BattlePanel para visualización de combate
+
+
 ### 🔧 Mejorado
 
 #### UI - Panel de Quests
@@ -79,6 +85,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 - Botones ahora visibles en Windows (BasicButtonUI)
 - Quest lookup funciona con títulos en vez de IDs
 - Progreso de quests visible correctamente
+- **InventoryPanel**: Corregido problema de contraste en detalles de items (texto blanco sobre fondo oscuro)
 
 ### 📚 Documentación
 - Actualizado README.md con features completas

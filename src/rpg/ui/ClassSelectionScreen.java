@@ -45,7 +45,7 @@ public class ClassSelectionScreen extends JPanel {
         titleLabel.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
         
         // Panel de clases
-        JPanel classPanel = new JPanel(new GridLayout(1, 3, 20, 0));
+        JPanel classPanel = new JPanel(new GridLayout(1, 4, 20, 0));
         classPanel.setBackground(new Color(30, 30, 40));
         classPanel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
         
@@ -55,7 +55,8 @@ public class ClassSelectionScreen extends JPanel {
             "GUERRERO",
             "Tanque resistente",
             "HP: 120 | ATK: 12 | DEF: 10 | MAG: 3",
-            new Color(192, 57, 43)
+            new Color(192, 57, 43),
+            "hero.png"
         ));
         
         classPanel.add(createClassCard(
@@ -63,7 +64,8 @@ public class ClassSelectionScreen extends JPanel {
             "ARQUERO",
             "Ataque a distancia",
             "HP: 90 | ATK: 15 | DEF: 5 | MAG: 5",
-            new Color(39, 174, 96)
+            new Color(39, 174, 96),
+            "archer.png"
         ));
         
         classPanel.add(createClassCard(
@@ -71,7 +73,17 @@ public class ClassSelectionScreen extends JPanel {
             "MAGO",
             "Poder magico devastador",
             "HP: 70 | ATK: 5 | DEF: 3 | MAG: 20",
-            new Color(142, 68, 173)
+            new Color(142, 68, 173),
+            "mage.png"
+        ));
+        
+        classPanel.add(createClassCard(
+            CharacterType.PRIEST,
+            "SACERDOTE",
+            "Curación y soporte",
+            "HP: 80 | ATK: 8 | DEF: 5 | MAG: 15",
+            new Color(241, 196, 15),
+            "priest.png"
         ));
         
         // Panel inferior con nombre y botones
@@ -139,7 +151,7 @@ public class ClassSelectionScreen extends JPanel {
     }
     
     private JPanel createClassCard(CharacterType type, String name, String description, 
-                                    String stats, Color color) {
+                                    String stats, Color color, String imageFile) {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setBackground(CARD_BG);
@@ -153,6 +165,17 @@ public class ClassSelectionScreen extends JPanel {
         nameLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
         nameLabel.setForeground(color);
         nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        // Imagen
+        JLabel imageLabel = new JLabel();
+        imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        try {
+            ImageIcon icon = new ImageIcon("assets/images/" + imageFile);
+            Image img = icon.getImage().getScaledInstance(96, 96, Image.SCALE_SMOOTH);
+            imageLabel.setIcon(new ImageIcon(img));
+        } catch (Exception e) {
+            imageLabel.setText("[IMG]");
+        }
         
         JLabel descLabel = new JLabel(description);
         descLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
@@ -169,6 +192,8 @@ public class ClassSelectionScreen extends JPanel {
         
         card.add(Box.createVerticalGlue());
         card.add(nameLabel);
+        card.add(Box.createVerticalStrut(10));
+        card.add(imageLabel);
         card.add(Box.createVerticalStrut(15));
         card.add(descLabel);
         card.add(Box.createVerticalStrut(20));

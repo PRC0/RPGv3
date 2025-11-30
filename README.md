@@ -57,18 +57,6 @@ El proyecto fue diseñado como caso de estudio para demostrar la aplicación pr�
 ### 💾 Persistencia
 - **Guardar/Cargar** partida completa
 - Serialización del personaje, inventario y equipo
-- Sistema robusto de manejo de errores
-
-### 🎨 Interfaz Gráfica (GUI)
-- **Ventana única** con navegación fluida entre secciones
-- **Actualización en tiempo real** mediante patrón Observer
-- Paneles: Exploración, Inventario, Misiones, Stats, Combate
-- **Log de eventos** para seguimiento de acciones
-
----
-
-## 🏗️ Arquitectura y Patrones
-
 ### Patrones de Diseño Implementados (8/6 requeridos)
 
 | Patrón | Tipo | Implementación | Propósito |
@@ -406,7 +394,14 @@ in the Software without restriction...
 - [x] 8 patrones de diseño GoF
 - [x] GUI con Swing (mejorada con colores y progreso)
 
-### Versión 1.1 (Próxima) 🚧
+### Versión 1.2 (Actual) ✅
+- [x] **Arte Visual**: Pixel Art para todos los personajes y enemigos
+- [x] **UI Mejorada**: Correcciones de contraste y usabilidad
+- [x] Sistema de Quests Completo
+- [x] Sistema de Drops y Loot Tables
+- [x] Balanceo de juego y corrección de bugs
+
+### Versión 1.3 (Próxima) 🚧
 - [ ] Sistema de crafting
 - [ ] 10+ enemigos diferentes
 - [ ] Múltiples mapas/zonas
